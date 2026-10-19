@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Startpage</title>
+  <style>
+    /* Default: Warm Xerox Light Palette (Follows Light Theme) */
+    :root {
+      --white: #EFECE6;
+      --true-white: #FFFFFF;
+      --true-black: #000000;
+      --surface: #EFECE6;
+      --surface-muted: #e7e4df;
+      --surface-subtle: #dfddd7;
+      --ink: #222D2C;
+      --ink-muted: #5c6463;
+      --hairline: #cecdc8;
+      --hairline-dark: #222D2C;
+      --primary: #1a66a6;
+      --secondary: #d35b50;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Andale Mono', monospace;
+    }
+
+    /* Automatically Follows Firefox / System Dark Theme */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --white: #161e1d;
+        --true-white: #0f1414;
+        --true-black: #ffffff;
+        --surface: #1c2524;
+        --surface-muted: #131918;
+        --surface-subtle: #222d2c;
+        --ink: #efece6;
+        --ink-muted: #8e9e9c;
+        --hairline: #2a3635;
+        --hairline-dark: #384645;
+        --primary: #3e8ac7;
+        --secondary: #e26d62;
+      }
+    }
+
+    /* Manual Override: Force Dark */
+    html[data-theme="dark"] {
+      --white: #161e1d !important;
+      --true-white: #0f1414 !important;
+      --true-black: #ffffff !important;
+      --surface: #1c2524 !important;
+      --surface-muted: #131918 !important;
+      --surface-subtle: #222d2c !important;
+      --ink: #efece6 !important;
+      --ink-muted: #8e9e9c !important;
+      --hairline: #2a3635 !important;
+      --hairline-dark: #384645 !important;
+      --primary: #3e8ac7 !important;
+      --secondary: #e26d62 !important;
+    }
+
+    /* Manual Override: Force Light */
+    html[data-theme="light"] {
+      --white: #EFECE6 !important;
+      --true-white: #FFFFFF !important;
+      --true-black: #000000 !important;
+      --surface: #EFECE6 !important;
+      --surface-muted: #e7e4df !important;
+      --surface-subtle: #dfddd7 !important;
+      --ink: #222D2C !important;
+      --ink-muted: #5c6463 !important;
+      --hairline: #cecdc8 !important;
+      --hairline-dark: #222D2C !important;
+      --primary: #1a66a6 !important;
+      --secondary: #d35b50 !important;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border-radius: 0 !important;
+    }
+
+    body {
+      background-color: var(--white);
+      color: var(--ink);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2.5rem 3.5rem;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+
+    /* Masthead Header */
+    header {
+      border-bottom: 1px solid var(--hairline-dark);
+      padding-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      letter-spacing: 0.04em;
+    }
+
+    .masthead-title {
+      font-weight: 700;
+      font-size: 0.9375rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+
+    .masthead-meta {
+      color: var(--ink-muted);
+      display: flex;
+      gap: 1.75rem;
+      align-items: center;
+    }
+
+    .masthead-meta span strong {
+      color: var(--ink);
+    }
+
+    .theme-toggle-btn {
+      background: transparent;
+      border: 1px solid var(--hairline-dark);
+      color: var(--ink-muted);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      cursor: pointer;
+      text-transform: uppercase;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Search & Filter Bar */
+    .search-section {
+      margin: 2.5rem 0 2rem 0;
+      max-width: 640px;
+    }
+
+    .search-form {
+      display: flex;
+      border: 1px solid var(--hairline-dark);
+      background: var(--white);
+    }
+
+    .search-prefix {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      padding: 0.65rem 0.875rem;
+      background: var(--surface-subtle, #222d2c);
+      border-right: 1px solid var(--hairline-dark);
+      color: var(--ink-muted);
+      display: flex;
+      align-items: center;
+      user-select: none;
+    }
+
+    .search-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      padding: 0.65rem 0.875rem;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--ink);
+      outline: none;
+    }
+
+    .search-input::placeholder {
+      color: var(--ink-muted);
+    }
+
+    /* Main Dashboard Grid: Split Layout */
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 3rem;
+      border-top: 1px solid var(--hairline-dark);
+      padding-top: 2rem;
+    }
+
+    /* Left Column: Events & Tasks */
+    .sidebar-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      border-right: 1px solid var(--hairline);
+      padding-right: 2.5rem;
+    }
+
+    .panel-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .panel-title {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--hairline);
+      padding-bottom: 0.4rem;
+    }
+
+    .panel-title span.badge {
+      font-size: 0.6875rem;
+      color: var(--ink-muted);
+      font-weight: 400;
+    }
+
+    /* Event Timeline Items */
+    .event-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      padding: 0.35rem 0;
+      border-left: 2px solid var(--hairline-dark);
+      padding-left: 0.75rem;
+    }
+
+    .event-item.active {
+      border-left-color: var(--secondary);
+    }
+
+    .event-time {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+    }
+
+    .event-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    /* Task Items */
+    .task-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.625rem;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.625rem;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      color: var(--ink);
+    }
+
+    .task-priority {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0;
+      border: none;
+      color: var(--ink-muted);
+      flex-shrink: 0;
+      min-width: 1.25rem;
+      margin-top: 1px;
+    }
+
+    .priority-crit {
+      color: var(--secondary);
+    }
+
+    .priority-a {
+      color: var(--primary);
+    }
+
+    .priority-b {
+      color: #f5a93b;
+    }
+
+    .task-text {
+      flex: 1;
+      font-weight: 400;
+    }
+
+    .task-tag {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--ink-muted);
+      margin-left: 0.25rem;
+    }
+
+    /* Main Content Area */
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2.75rem;
+      min-width: 0;
+    }
+
+    /* Active Projects Section */
+    .projects-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1.125rem;
+    }
+
+    .projects-header {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--hairline);
+      padding-bottom: 0.4rem;
+    }
+
+    .projects-header a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .projects-header a:hover {
+      text-decoration: underline;
+    }
+
+    .projects-header span.badge {
+      font-size: 0.6875rem;
+      color: var(--ink-muted);
+      font-weight: 400;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .project-card {
+      border: 1px solid var(--hairline);
+      background: var(--surface);
+      padding: 0.875rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .project-card:hover {
+      border-color: var(--hairline-dark);
+    }
+
+    .project-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .project-title-link {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--ink);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .project-title-link:hover {
+      color: var(--primary);
+    }
+
+    .project-domain-tag {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--ink-muted);
+    }
+
+    .project-action-box {
+      font-size: 0.8125rem;
+      line-height: 1.4;
+      color: var(--ink);
+      padding-top: 0.4rem;
+      border-top: 1px solid var(--hairline);
+    }
+
+    .project-action-label {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    /* Right Column: Sparsely Arranged Navigation Matrix */
+    .nav-matrix {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+
+    .column-header {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--hairline);
+      padding-bottom: 0.4rem;
+    }
+
+    .column-header span {
+      color: var(--primary);
+    }
+
+    .link-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+
+    .link-item a {
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      display: inline-block;
+      transition: color 0.1s ease;
+      position: relative;
+    }
+
+    .link-item a:hover {
+      color: var(--primary);
+    }
+
+    .link-item a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -2px;
+      width: 0%;
+      height: 1px;
+      background-color: var(--primary);
+      transition: width 0.15s ease;
+    }
+
+    .link-item a:hover::after {
+      width: 100%;
+    }
+
+    .link-desc {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--hairline-dark);
+      padding-top: 1rem;
+      margin-top: 3rem;
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+    }
+
+    .footer-stamp {
+      letter-spacing: 0.05em;
+    }
+
+    /* Palette & Texture Swatch Ribbon */
+    .swatch-ribbon {
+      margin-bottom: 2.25rem;
+      border: 1px solid var(--hairline-dark);
+      background: var(--surface);
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.75rem;
+      flex-wrap: wrap;
+    }
+
+    .swatch-group {
+      display: flex;
+      align-items: center;
+      gap: 0.875rem;
+    }
+
+    .swatch-group-label {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+    }
+
+    .swatch-chips {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .swatch-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--hairline-dark);
+    }
+
+    .color-chip {
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--hairline-dark);
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.1s ease;
+    }
+
+    .color-chip:hover {
+      transform: translateY(-2px);
+    }
+
+    .pattern-chip {
+      width: 28px;
+      height: 24px;
+      border: 1px solid var(--hairline-dark);
+      background: var(--white);
+      color: var(--ink);
+      position: relative;
+      cursor: default;
+    }
+
+    .pattern-chip svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Tooltip styling */
+    .chip-tooltip {
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--ink);
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      font-weight: 600;
+      white-space: nowrap;
+      padding: 2px 6px;
+      border: 1px solid var(--hairline-dark);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.12s ease;
+      z-index: 100;
+    }
+
+    .color-chip:hover .chip-tooltip,
+    .pattern-chip:hover .chip-tooltip {
+      opacity: 1;
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--ink);
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--hairline-dark);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 1000;
+    }
+
+    .toast-msg.visible {
+      opacity: 1;
+    }
+
+    @media (max-width: 1100px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+      .sidebar-panel {
+        border-right: none;
+        border-bottom: 1px solid var(--hairline);
+        padding-right: 0;
+        padding-bottom: 2rem;
+      }
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .nav-matrix {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1.5rem;
+      }
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      .nav-matrix {
+        grid-template-columns: 1fr;
+      }
+      .masthead-meta {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Masthead -->
+  <header>
+    <div class="masthead-title">Printed Matter // Terminal Index</div>
+    <div class="masthead-meta">
+      <span>CALLSIGN: <strong>KD2LPU</strong></span>
+      <span>QTH: <strong>40.82° N, 74.21° W</strong></span>
+      <span>ELEV: <strong>550 FT</strong></span>
+      <span id="live-time">--:--:--</span>
+      <button class="theme-toggle-btn" id="theme-btn" onclick="cycleTheme()">Theme: Auto</button>
+    </div>
+  </header>
+
+  <!-- Search -->
+  <section class="search-section">
+    <form class="search-form" action="https://duckduckgo.com/" method="GET">
+      <div class="search-prefix">FIND /</div>
+      <input 
+        type="text" 
+        name="q" 
+        class="search-input" 
+        placeholder="search duckduckgo..." 
+        autocomplete="off" 
+        autofocus
+      >
+    </form>
+  </section>
+
+  <!-- Hidden Pattern Definitions for Swatches -->
+  <svg width="0" height="0" style="position:absolute;visibility:hidden;" aria-hidden="true">
+    <defs>
+      <pattern id="hp-hatch-45" width="8" height="8" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="8" stroke="currentColor" stroke-width="1.5"/>
+      </pattern>
+      <pattern id="hp-hatch-135" width="8" height="8" patternTransform="rotate(135 0 0)" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="0" y2="8" stroke="currentColor" stroke-width="1.5"/>
+      </pattern>
+      <pattern id="hp-cross" width="8" height="8" patternUnits="userSpaceOnUse">
+        <path d="M 0 0 L 8 8 M 8 0 L 0 8" stroke="currentColor" stroke-width="1"/>
+      </pattern>
+      <pattern id="hp-dots" width="8" height="8" patternUnits="userSpaceOnUse">
+        <circle cx="4" cy="4" r="1.5" fill="currentColor"/>
+      </pattern>
+      <pattern id="hp-stipple" width="12" height="12" patternUnits="userSpaceOnUse">
+        <circle cx="2" cy="2" r="1" fill="currentColor"/>
+        <circle cx="8" cy="8" r="1" fill="currentColor"/>
+        <circle cx="2" cy="8" r="0.75" fill="currentColor" opacity="0.6"/>
+        <circle cx="8" cy="2" r="0.75" fill="currentColor" opacity="0.6"/>
+      </pattern>
+    </defs>
+  </svg>
+
+  <!-- Swatch Ribbon: Color Palette & Patterns -->
+  <section class="swatch-ribbon" aria-label="Palette and Pattern Swatches">
+    <div class="swatch-group">
+      <div class="swatch-group-label">PALETTE / SPOT INKS</div>
+      <div class="swatch-chips">
+        <div class="color-chip" style="background-color: var(--spectrum-blue);" onclick="copyHex('#2F7EB8', 'Blue')" title="Blue (#2F7EB8)">
+          <span class="chip-tooltip">Blue #2F7EB8</span>
+        </div>
+        <div class="color-chip" style="background-color: var(--spectrum-red);" onclick="copyHex('#D40000', 'Red')" title="Red (#D40000)">
+          <span class="chip-tooltip">Red #D40000</span>
+        </div>
+        <div class="color-chip" style="background-color: var(--spectrum-orange);" onclick="copyHex('#DE4800', 'Orange')" title="Orange (#DE4800)">
+          <span class="chip-tooltip">Orange #DE4800</span>
+        </div>
+        <div class="color-chip" style="background-color: var(--spectrum-yellow);" onclick="copyHex('#FFD000', 'Yellow')" title="Yellow (#FFD000)">
+          <span class="chip-tooltip">Yellow #FFD000</span>
+        </div>
+        <div class="color-chip" style="background-color: var(--spectrum-green);" onclick="copyHex('#00B359', 'Green')" title="Green (#00B359)">
+          <span class="chip-tooltip">Green #00B359</span>
+        </div>
+        <div class="color-chip" style="background-color: var(--spectrum-aqua);" onclick="copyHex('#00CED1', 'Aqua')" title="Aqua (#00CED1)">
+          <span class="chip-tooltip">Aqua #00CED1</span>
+        </div>
+        <div class="color-chip" style="background-color: var(--spectrum-violet);" onclick="copyHex('#9900DE', 'Violet')" title="Violet (#9900DE)">
+          <span class="chip-tooltip">Violet #9900DE</span>
+        </div>
+        <div class="color-chip" style="background-color: var(--ink);" onclick="copyHex('var(--ink)', 'Ink')" title="Ink">
+          <span class="chip-tooltip">Ink Primary</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="swatch-divider"></div>
+
+    <div class="swatch-group">
+      <div class="swatch-group-label">TEXTURES / PRINT PATTERNS</div>
+      <div class="swatch-chips">
+        <div class="pattern-chip" title="Hatch 45°">
+          <svg><rect width="100%" height="100%" fill="url(#hp-hatch-45)"/></svg>
+          <span class="chip-tooltip">Hatch 45°</span>
+        </div>
+        <div class="pattern-chip" title="Hatch 135°">
+          <svg><rect width="100%" height="100%" fill="url(#hp-hatch-135)"/></svg>
+          <span class="chip-tooltip">Hatch 135°</span>
+        </div>
+        <div class="pattern-chip" title="Crosshatch">
+          <svg><rect width="100%" height="100%" fill="url(#hp-cross)"/></svg>
+          <span class="chip-tooltip">Crosshatch</span>
+        </div>
+        <div class="pattern-chip" title="Halftone Dots">
+          <svg><rect width="100%" height="100%" fill="url(#hp-dots)"/></svg>
+          <span class="chip-tooltip">Dots 8px</span>
+        </div>
+        <div class="pattern-chip" title="Stipple">
+          <svg><rect width="100%" height="100%" fill="url(#hp-stipple)"/></svg>
+          <span class="chip-tooltip">Stipple 12px</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Split Layout -->
+  <main>
+
+    <!-- Left Column: Events, Tasks & Projects -->
+    <aside class="sidebar-panel">
+
+      <!-- Today's Schedule & Routine -->
+      <div class="panel-block">
+        <div class="panel-title">
+          <a href="tasks/schedule.md" style="color:inherit;text-decoration:none;">schedule.md</a>
+        </div>
+        <div class="event-item">
+          <span class="event-time">08:30 – 09:30</span>
+          <span class="event-name">Morning Routine & Mindset</span>
+        </div>
+        <div class="event-item active">
+          <span class="event-time">09:30 – 12:30</span>
+          <span class="event-name">Deep Focus 1</span>
+        </div>
+        <div class="event-item">
+          <span class="event-time">12:30 – 13:30</span>
+          <span class="event-name">Lunch, Movement & Break</span>
+        </div>
+        <div class="event-item">
+          <span class="event-time">13:30 – 16:30</span>
+          <span class="event-name">Deep Focus 2 / Project Workbench</span>
+        </div>
+        <div class="event-item">
+          <span class="event-time">16:30 – 17:30</span>
+          <span class="event-name">Admin, Inbox & Daily Shutdown</span>
+        </div>
+      </div>
+
+      <!-- Active Punch List (today.md) -->
+      <div class="panel-block">
+        <div class="panel-title">
+          <a href="tasks/today.md" style="color:inherit;text-decoration:none;">today.md</a>
+        </div>
+        <ul class="task-list">
+          <li class="task-item">
+            <span class="task-priority priority-crit">[!]</span>
+            <span class="task-text">Complete first-run onboarding interview</span>
+          </li>
+          <li class="task-item">
+            <span class="task-priority priority-a">[A]</span>
+            <span class="task-text">Review tasks/schedule.md rhythm blocks</span>
+          </li>
+          <li class="task-item">
+            <span class="task-priority priority-b">[B]</span>
+            <span class="task-text">Add initial project to tasks/projects.md</span>
+          </li>
+          <li class="task-item">
+            <span class="task-priority">[C]</span>
+            <span class="task-text">Test task manager CLI with `task`</span>
+          </li>
+        </ul>
+      </div>
+
+    </aside>
+
+    <!-- Right Column: Projects & Navigation Matrix -->
+    <div class="main-content">
+
+      <!-- Active Projects & Next Actions -->
+      <section class="projects-section">
+        <div class="projects-header">
+          <span><a href="tasks/projects.md">Active Projects</a></span>
+          <span class="badge">1 active // next actions</span>
+        </div>
+        <div class="projects-grid">
+
+          <div class="project-card">
+            <div class="project-meta">
+              <a href="tasks/projects/starter-project.md" class="project-title-link">
+                <span class="task-priority priority-a">+</span>starter-project
+              </a>
+              <span class="project-domain-tag">personal / starter</span>
+            </div>
+            <div class="project-action-box">
+              <span class="project-action-label">Next Action</span>
+              Explore the directory structure and read CLAUDE.md.
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Navigation Matrix -->
+      <section class="nav-matrix">
+
+        <!-- GTD & Tasks -->
+        <div class="column">
+          <div class="column-header"><span>01</span> GTD & Tasks</div>
+          <ul class="link-list">
+            <li class="link-item">
+              <a href="tasks/inbox.md">Inbox</a>
+              <span class="link-desc">tasks/inbox.md</span>
+            </li>
+            <li class="link-item">
+              <a href="tasks/today.md">Today's Punch List</a>
+              <span class="link-desc">tasks/today.md</span>
+            </li>
+            <li class="link-item">
+              <a href="tasks/projects.md">Projects Router</a>
+              <span class="link-desc">tasks/projects.md</span>
+            </li>
+            <li class="link-item">
+              <a href="tasks/schedule.md">Daily Schedule</a>
+              <span class="link-desc">tasks/schedule.md</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Knowledge & Memory -->
+        <div class="column">
+          <div class="column-header"><span>02</span> Knowledge & Memory</div>
+          <ul class="link-list">
+            <li class="link-item">
+              <a href="knowledge/_Memory/identity/bio.md">Identity & Bio</a>
+              <span class="link-desc">_Memory/identity/bio.md</span>
+            </li>
+            <li class="link-item">
+              <a href="knowledge/_Memory/preferences/_overview.md">Preferences</a>
+              <span class="link-desc">_Memory/preferences/</span>
+            </li>
+            <li class="link-item">
+              <a href="knowledge/_Memory/active/_session.md">Active Session</a>
+              <span class="link-desc">_Memory/active/_session.md</span>
+            </li>
+            <li class="link-item">
+              <a href="routines/daily.md">Daily Routines</a>
+              <span class="link-desc">routines/daily.md</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- System & Tools -->
+        <div class="column">
+          <div class="column-header"><span>03</span> System & Tools</div>
+          <ul class="link-list">
+            <li class="link-item">
+              <a href="CLAUDE.md">Governor Rules</a>
+              <span class="link-desc">CLAUDE.md</span>
+            </li>
+            <li class="link-item">
+              <a href="tools/catalog.md">Tool Catalog</a>
+              <span class="link-desc">tools/catalog.md</span>
+            </li>
+            <li class="link-item">
+              <a href="tasks/aliases.sh">Shell Aliases</a>
+              <span class="link-desc">tasks/aliases.sh</span>
+            </li>
+            <li class="link-item">
+              <a href="README.md">Workspace README</a>
+              <span class="link-desc">README.md</span>
+            </li>
+          </ul>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-stamp">SYSTEM: PRINTED MATTER DS // PHOTOSTAT NEGATIVE GROUND</div>
+    <div class="footer-note">PRESS '/' TO SEARCH // 'T' TO TOGGLE THEME</div>
+  </footer>
+
+  <script>
+    // Live Clock
+    function updateClock() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false });
+      const dateStr = now.toLocaleDateString([], { month: 'short', day: '2-digit' }).toUpperCase();
+      const el = document.getElementById('live-time');
+      if (el) el.textContent = `${dateStr} ${timeStr}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Theme Management: Follows Firefox theme by default
+    let currentThemeMode = 'auto'; // 'auto', 'light', or 'dark'
+
+    function isSystemDark() {
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    function updateThemeUI() {
+      const btn = document.getElementById('theme-btn');
+      if (!btn) return;
+      if (currentThemeMode === 'auto') {
+        const active = isSystemDark() ? 'Dark' : 'Light';
+        btn.textContent = `Theme: Auto (${active})`;
+      } else {
+        btn.textContent = `Theme: ${currentThemeMode.toUpperCase()}`;
+      }
+    }
+
+    function applyThemeMode(mode) {
+      currentThemeMode = mode;
+      if (mode === 'auto') {
+        document.documentElement.removeAttribute('data-theme');
+        try { localStorage.removeItem('pm-theme'); } catch (e) {}
+      } else {
+        document.documentElement.setAttribute('data-theme', mode);
+        try { localStorage.setItem('pm-theme', mode); } catch (e) {}
+      }
+      updateThemeUI();
+    }
+
+    function cycleTheme() {
+      if (currentThemeMode === 'auto') {
+        // Switch to explicit opposite of current auto
+        applyThemeMode(isSystemDark() ? 'light' : 'dark');
+      } else if (currentThemeMode === 'light') {
+        applyThemeMode('dark');
+      } else {
+        // Return to auto
+        applyThemeMode('auto');
+      }
+    }
+
+    // Initialize: default to 'auto' so it strictly follows Firefox
+    applyThemeMode('auto');
+
+    // Watch for dynamic changes in Firefox / System theme in real-time
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+        if (currentThemeMode === 'auto') {
+          updateThemeUI();
+        }
+      });
+    }
+
+    // Hotkeys
+    document.addEventListener('keydown', function(e) {
+      if (document.activeElement === document.querySelector('.search-input')) return;
+      if (e.key === '/') {
+        e.preventDefault();
+        document.querySelector('.search-input').focus();
+      } else if (e.key.toLowerCase() === 't') {
+        cycleTheme();
+      }
+    });
+
+    // Clipboard Helper for Palette Chips
+    function copyHex(value, label) {
+      // Resolve CSS var if passed
+      let hex = value;
+      if (value.startsWith('var(')) {
+        const varName = value.replace(/var\(|\)/g, '').trim();
+        hex = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+      }
+      navigator.clipboard.writeText(hex).then(() => {
+        showToast('COPIED: ' + label + ' (' + hex + ')');
+      }).catch(() => {
+        showToast('SELECTED: ' + hex);
+      });
+    }
+
+    function showToast(msg) {
+      let toast = document.getElementById('hp-toast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'hp-toast';
+        toast.className = 'toast-msg';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = msg;
+      toast.classList.add('visible');
+      setTimeout(() => {
+        toast.classList.remove('visible');
+      }, 2200);
+    }
+  </script>
+
+  <div id="hp-toast" class="toast-msg" aria-live="polite"></div>
+
+</body>
+</html>

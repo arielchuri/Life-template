@@ -1,0 +1,20 @@
+# Workspace Agent Rules
+
+## Editor Preferences
+- When asked to open text/code/markdown files for the user on this system, open them using `$EDITOR <files>`.
+
+## Workspace Domains & Scoping
+- **`ongoing/` (Perpetual Responsibilities)**:
+  - Areas that lack a termination date (health, home maintenance, finances, family).
+  - Treat as perpetual operational domains, not finite projects with a delivery milestone.
+- **`projects/` (Finite Scoped Workspaces)**:
+  - Finite endeavors with deliverables and an explicit completion state (`personal/`, `work/`).
+- **`routines/` (Recurring Workflows & Cadence)**:
+  - Documents daily, weekly, and monthly routines distinguishing between automated tasks and manual rituals.
+
+## Logging Conventions
+- **Daily System & Activity Logs (`logs/YYYY-MM-DD.md`)**: **Append** in temporal order (`[HH:MM]`). Append-only preserves timeline flow and safe atomic writes.
+- **Project Status & Running Notes (`status.md`)**: **Prepend** new highlights under a `## Recent Updates` section at the top of the file so latest state is immediately visible without scrolling.
+
+## Work Session Grounding
+- **Always Check `tasks.md`**: When starting a work session in any project or directory containing a `tasks.md`, always inspect and review `tasks.md` first to ground context on active priorities before proposing or taking action.

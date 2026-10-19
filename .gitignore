@@ -1,0 +1,36 @@
+# Scratch & Temporary
+.tmp/
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Python & Virtual Environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Node / JS
+node_modules/
+
+# Local Environment Variables & Secrets
+.env
+.env.local
+*.key
+*.pem
+*.token
+
+# Tools Directory (Local builds & installed daemons)
+tools/*
+!tools/catalog.md
+!tools/.gitkeep
