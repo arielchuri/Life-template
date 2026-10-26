@@ -3,7 +3,7 @@
 # ==============================================================================
 
 Write-Host "=================================================================" -ForegroundColor Cyan
-Write-Host " Life Workspace — Setup & Dependency Checker (Windows)" -ForegroundColor Cyan
+Write-Host " Life Workspace - Setup & Dependency Checker (Windows)" -ForegroundColor Cyan
 Write-Host "=================================================================" -ForegroundColor Cyan
 Write-Host ""
 
