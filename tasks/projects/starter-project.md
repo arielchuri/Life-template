@@ -8,5 +8,5 @@
 2. Create first personal or work project
 
 ## Tasks
-- [ ] Explore the directory structure and read CLAUDE.md +starter-project
-- [ ] Add your first project using `CLAUDE.md` guidelines +starter-project
+- [ ] Explore the directory structure and read AGENTS.md +starter-project
+- [ ] Add your first project using `AGENTS.md` guidelines +starter-project

@@ -49,7 +49,7 @@ Add `tasks/aliases.sh` (or `tasks/aliases.ps1`) to your shell profile to manage 
 
 ```text
 Life/
-├── CLAUDE.md                   # AI governor rules, behavioral conventions, and onboarding
+├── AGENTS.md                   # AI governor rules, behavioral conventions, and onboarding (symlinked to CLAUDE.md)
 ├── install.sh / install.ps1    # One-click bootstrap script for macOS, Linux, and Windows
 ├── routines/                   # Recurring rhythms (daily action sheets, weekly resets, monthly reviews)
 ├── ongoing/                    # Perpetual life tracks (family, home-improvement, health, vehicles)
@@ -79,4 +79,4 @@ Open the folder in your terminal and run your assistant (e.g. `agy` or `claude`)
 ```bash
 agy
 ```
-The AI reads `CLAUDE.md`, recognizes a new setup, and walks you through an onboarding interview to configure your daily rhythms, active projects, and family logistics.
+The AI reads `AGENTS.md` (or `CLAUDE.md`), recognizes a new setup, and walks you through an onboarding interview to configure your daily rhythms, active projects, and family logistics.
