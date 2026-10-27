@@ -79,7 +79,7 @@ Write-Host ""
 Write-Host "-----------------------------------------------------------------" -ForegroundColor Cyan
 Write-Host " Shell Aliases Setup" -ForegroundColor Cyan
 Write-Host "-----------------------------------------------------------------" -ForegroundColor Cyan
-Write-Host "To enable shortcuts (task, t, n, ei, et, eo, ea, tg), add this line"
+Write-Host "To enable shortcuts (task, t, n, ei, et, eo, ea, tg, ne, ng, nt), add this line"
 Write-Host "to your PowerShell profile ($PROFILE):"
 Write-Host ""
 $SourceLine = ". `"$TasksDir\aliases.ps1`""

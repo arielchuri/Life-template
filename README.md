@@ -1,78 +1,82 @@
 # Life Workspace Template
 
-A modular personal life, GTD task management, and knowledge governor workspace designed for collaboration with AI coding assistants (Claude Code, Antigravity, Cursor, etc.).
+An AI-governed personal life management operating system. Built for continuous collaboration with agentic AI assistants (Antigravity, Claude Code, Cursor) acting as your personal governor, executive assistant, and memory keeper.
+
+---
+
+## What is the Life Workspace?
+
+This workspace is not a code repository—it is a **central nervous system for your everyday life, family, home, and projects**. 
+
+Instead of fragmenting your life across disconnected apps, everything lives in human-readable Markdown files that you and your AI agent co-maintain:
+
+- 📬 **Email Briefings & Communications**: Daily automated email scans across personal and work accounts, distilling inbox clutter into actionable summaries and flagging contractor/vendor follow-ups.
+- 🏫 **Family & Kids' Schooling**: Academic progress monitoring, automated Google Classroom / SIS scraping, and generation of printable daily/weekly student action sheets and study aids.
+- 🏡 **Household & Life Maintenance (`ongoing/`)**: Continuous management for home repairs, contractor bids (HVAC, floor refinishing, windows), appliance warranties, cars, and medical/health routines.
+- ✈️ **Multi-Project Management (`projects/`)**: Dedicated workbenches for finite personal, legal, professional, and creative endeavors (from international family travel itineraries and apostille legal filings to course syllabi and creative zines).
+- 🧠 **Durable Memory & Notes (`knowledge/`)**: An Obsidian-compatible personal wiki that keeps your background, preferences, decisions, and reference notes permanently grounded for the AI.
+- ✅ **GTD Task Engine (`tasks/`)**: Fast, lightweight task prioritization powered by `pytodo` with instant terminal visibility.
+
+---
+
+## Daily Workflow & Shell Shortcuts
+
+Add `tasks/aliases.sh` (or `tasks/aliases.ps1`) to your shell profile to manage tasks and notes instantly:
+
+### 📝 Notes & Knowledge (`knowledge/_Memory/notes/`)
+| Shortcut | Action | Description |
+| :--- | :--- | :--- |
+| **`ne`** | Note Edit | Fuzzy-find any markdown note and open it directly in your `$EDITOR`. |
+| **`ng <query>`** | Note Grep | Instantly search across all personal knowledge notes using `ripgrep`. |
+| **`nt`** | Note Tasks | Fuzzy-find notes and print any uncompleted action items inside them. |
+| **`ns`** | Note Shortcuts | Display the full notes and tasks shortcuts cheat sheet. |
+
+### 📋 GTD Tasks (`tasks/`)
+| Shortcut | Action | Description |
+| :--- | :--- | :--- |
+| **`task`** | `todo list` | View active tasks prioritized and grouped by domain/tag. |
+| **`t`** | Quick Dashboard | Clears screen, displays today's date, and outputs active tasks. |
+| **`n`** | Next Action | Outputs the single next immediate uncompleted action. |
+| **`tg <query>`** | Task Grep | Searches across all task markdown files with `ripgrep`. |
+| **`ei`** | Edit Inbox | Opens `tasks/inbox.md` for rapid capture. |
+| **`et`** | Edit Tasks | Opens primary task files (`oneoffs.md`, `projects.md`, `tags.md`). |
+| **`eo`** | Edit Other | Opens backlog files (`tomorrow.md`, `someday.md`, `waiting.md`). |
+| **`ea`** | Edit All | Opens all active task lists in split editor panes. |
+
+---
+
+## Workspace Structure
+
+```text
+Life/
+├── CLAUDE.md                   # AI governor rules, behavioral conventions, and onboarding
+├── install.sh / install.ps1    # One-click bootstrap script for macOS, Linux, and Windows
+├── routines/                   # Recurring rhythms (daily action sheets, weekly resets, monthly reviews)
+├── ongoing/                    # Perpetual life tracks (family, home-improvement, health, vehicles)
+├── projects/                   # Finite projects across personal, home, school, work, and creative domains
+├── knowledge/_Memory/          # Durable long-term memory vault, preferences, identity, and reference notes
+├── tasks/                      # GTD task lists, pytodo CLI tool, and shell aliases
+├── tools/                      # Automation scripts (email checkers, calendar sync, school scrapers)
+├── logs/                       # Chronological activity records and daily email briefings
+└── .tmp/                       # Gitignored scratchpad for throwaway work
+```
 
 ---
 
 ## Quickstart
 
-### 1. Run the Setup & Dependency Checker
-
-**On macOS & Linux:**
+### 1. Run Setup
 ```bash
+# macOS & Linux
 ./install.sh
-```
 
-**On Windows (PowerShell):**
-```powershell
+# Windows (PowerShell)
 .\install.ps1
 ```
 
-The script will:
-- Check for system dependencies (`python >= 3.10`, `git`, `ripgrep`, `$EDITOR`).
-- Display copy-paste commands if any required tools are missing.
-- Install the `pytodo` task manager CLI into a local virtualenv.
-- Offer to configure your shell aliases (`task`, `t`, `n`, `ei`, `et`, `ea`, `tg`).
-
----
-
 ### 2. Launch Your AI Assistant
-
-Open the repository in your terminal and launch your assistant (e.g. `claude` or `agy`):
-
+Open the folder in your terminal and run your assistant (e.g. `agy` or `claude`):
 ```bash
-claude
+agy
 ```
-
-The AI reads `CLAUDE.md` and detects that this is a fresh setup. It will automatically initiate a guided **onboarding interview** to configure:
-1. Your identity, location, and background.
-2. Your daily schedule blocks in `tasks/schedule.md`.
-3. Your initial active projects in `projects/` and `tasks/projects.md`.
-4. Your tool and communication preferences.
-
----
-
-## GTD Workflow & Shell Shortcuts
-
-Once `tasks/aliases.sh` (or `tasks/aliases.ps1`) is sourced in your shell profile:
-
-| Shortcut | Action | Description |
-| :--- | :--- | :--- |
-| **`task`** | `todo list` | Displays active tasks filtered by priority. |
-| **`t`** | `todo list` (with date) | Clears terminal, displays current date and active tasks. |
-| **`n`** | Next action | Instantly outputs the single next uncompleted action. |
-| **`ei`** | Edit Inbox | Opens `tasks/inbox.md` in your `$EDITOR`. |
-| **`et`** | Edit Tasks | Opens primary task files (`oneoffs.md`, `projects.md`, `tags.md`). |
-| **`eo`** | Edit Other | Opens `tomorrow.md`, `someday.md`, and `waiting.md`. |
-| **`ea`** | Edit All | Opens all primary task files in split editor buffers. |
-| **`tg`** | Task Grep | Searches markdown task lists using `ripgrep`. |
-
----
-
-## Directory Overview
-
-```text
-Life/
-├── CLAUDE.md                   # AI governor rules and onboarding prompt
-├── .agent_rules                # Cross-agent operational rules
-├── install.sh / install.ps1    # Bootstrap script for all platforms
-├── homepage.html               # Starter browser dashboard
-├── routines/                   # Daily, weekly, and monthly rhythm templates
-├── tasks/                      # GTD task lists and pytodo CLI tool
-├── ongoing/                    # Perpetual life areas lacking termination
-├── projects/                   # Finite workspaces (personal/ and work/)
-├── knowledge/_Memory/          # Durable long-term memory store
-├── tools/                      # Local utilities catalog
-├── logs/                       # Daily append-only activity records
-└── .tmp/                       # Gitignored scratch space
-```
+The AI reads `CLAUDE.md`, recognizes a new setup, and walks you through an onboarding interview to configure your daily rhythms, active projects, and family logistics.

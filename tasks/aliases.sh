@@ -32,3 +32,37 @@ alias ei="$EDITOR \"$LIFE_TASKS_DIR/inbox.md\""
 alias et="$EDITOR \"$LIFE_TASKS_DIR/oneoffs.md\" \"$LIFE_TASKS_DIR/projects.md\" \"$LIFE_TASKS_DIR/tags.md\""
 alias eo="$EDITOR \"$LIFE_TASKS_DIR/tomorrow.md\" \"$LIFE_TASKS_DIR/someday.md\" \"$LIFE_TASKS_DIR/waiting.md\""
 alias ea="$EDITOR \"$LIFE_TASKS_DIR/today.md\" \"$LIFE_TASKS_DIR/inbox.md\" \"$LIFE_TASKS_DIR/oneoffs.md\" \"$LIFE_TASKS_DIR/projects.md\""
+
+# Notes & Knowledge Base Aliases (knowledge/_Memory/notes/)
+ng() {
+  local search_dir="$LIFE_ROOT/knowledge/_Memory/notes"
+  if [ -d "$search_dir" ]; then
+    rg -iN --color=always --heading -C 2 "$@" "$search_dir"
+  else
+    echo "Notes directory not found at $search_dir"
+  fi
+}
+
+ne() {
+  local notes_dir="$LIFE_ROOT/knowledge/_Memory/notes"
+  if command -v fzf >/dev/null 2>&1; then
+    local selected
+    selected=$(find "$notes_dir" -name "*.md" 2>/dev/null | fzf --prompt="Select Note: ")
+    [ -n "$selected" ] && $EDITOR "$selected"
+  else
+    $EDITOR "$notes_dir"
+  fi
+}
+
+nt() {
+  local notes_dir="$LIFE_ROOT/knowledge/_Memory/notes"
+  if command -v fzf >/dev/null 2>&1; then
+    local selected
+    selected=$(find "$notes_dir" -name "*.md" 2>/dev/null | fzf --prompt="Select Note for Tasks: ")
+    [ -n "$selected" ] && rg "\- \[[^xX\-]\]" "$selected"
+  else
+    rg "\- \[[^xX\-]\]" "$notes_dir"
+  fi
+}
+
+alias ns="cat \"$LIFE_ROOT/knowledge/_Memory/notes/notesshortcuts.md\" 2>/dev/null || echo 'Run \"cat \$LIFE_ROOT/knowledge/_Memory/notes/notesshortcuts.md\" or check README.md for shortcuts.'"
