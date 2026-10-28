@@ -1,3 +1,5 @@
+Special thanks to [kerodibatu](https://github.com/kerodkibatu) and [AbemKW](https://github.com/AbemKW/AbemKW) for turning me on to this.
+
 # Life Workspace Template
 
 An AI-governed personal life management operating system. Built for continuous collaboration with agentic AI assistants (Antigravity, Claude Code, Cursor) acting as your personal governor, executive assistant, and memory keeper.
